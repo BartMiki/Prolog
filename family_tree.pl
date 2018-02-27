@@ -29,27 +29,51 @@ rodzic(tomasz,roman).
 rodzic(pawel,iza).
 rodzic(anna,iza).
 
-matka(X,Y):-
-	kobieta(X),
-	rodzic(X,Y).
-ojciec(X,Y):-
-	mezczyzna(X),
-	rodzic(X,Y).
-syn(Rodzic,Syn):-
-	mezczyzna(Syn),
-	rodzic(Rodzic,Syn).
-corka(X,Y):-
-	kobieta(Y),
-	rodzic(X,Y).
-brat(X,Y):-
-	rodzic(Z,X),
-	rodzic(Z,Y),
-	mezczyzna(Y).
-siostra(X,Y):-
-	rodzic(Z,X),
-	rodzic(Z,Y),
-	kobieta(Y).
-rodzenstwo(X,Y):-
-	brat(X,Y).
-rodzenstwo(X,Y):-
-	siostra(X,Y).
+matka(Rodzic,Dziecko):-
+	kobieta(Rodzic),
+	rodzic(Rodzic,Dziecko).
+ojciec(Rodzic,Dziecko):-
+	mezczyzna(Rodzic),
+	rodzic(Rodzic,Dziecko).
+syn(Dziecko,Rodzic):-
+	mezczyzna(Dziecko),
+	rodzic(Rodzic,Dziecko).
+corka(Dziecko,Rodzic):-
+	kobieta(Dziecko),
+	rodzic(Rodzic,Dziecko).
+brat(Brat,Dziecko):-
+	rodzic(Rodzic,Brat),
+	rodzic(Rodzic,Dziecko),
+	mezczyzna(Brat).
+siostra(Siostra,Dziecko):-
+	rodzic(Rodzic,Dziecko),
+	rodzic(Rodzic,Siostra),
+	corka(Siostra,Rodzic).
+rodzenstwo(Dziecko1,Dziecko2):-
+	brat(Dziecko1,Dziecko2).
+rodzenstwo(Dziecko1,Dziecko2):-
+	siostra(Dziecko1,Dziecko2).
+ciocia(Ciocia,Dziecko):-
+	rodzic(Rodzic,Dziecko),
+	siostra(Ciocia,Rodzic).
+wujek(Wujek,Dziecko):-
+	rodzic(Rodzic,Dziecko),
+	brat(Wujek,Rodzic).
+kuzynka(Kuzynka,Dziecko):-
+	ciocia(Ciocia,Dziecko),
+	corka(Kuzynka,Ciocia).
+kuzynka(Kuzynka,Dziecko):-
+	wujek(Wujek,Dziecko),
+	corka(Kuzynka,Wujek).
+kuzyn(Kuzyn,Dziecko):-
+	ciocia(Ciocia,Dziecko),
+	syn(Kuzyn,Ciocia).
+kuzyn(Kuzynka,Dziecko):-
+	wujek(Wujek,Dziecko),
+	syn(Kuzyn,Wujek).
+babcia(Babcia,Dziecko):-
+	rodzic(Rodzic,Dziecko),
+	matka(Babcia,Rodzic).
+dziadek(Dziadek,Dziecko):-
+	rodzic(Rodzic,Dziecko),
+	ojciec(Dziadek,Rodzic).
