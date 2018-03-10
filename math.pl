@@ -41,10 +41,12 @@ fib(NrWyrazu,Wartosc):-
 	fib(NrWyrazu2,Wartosc2),
 	Wartosc is Wartosc1 + Wartosc2.
 
-ifib(Nr,W):-
-	ifib(Nr,W,Wp,1).
-ifib(Nr,W,Wp,Nr).
-ifib(Nr,W,Wp,Acc):-
-	Nr < Acc,
-	Acc1 is Acc+1,
+ifib(N,X):-
+	ifib(N,0,1,X).
+ifib(0,X,_,X).
+ifib(N,Var1,Var2,X):-
+	N > 0,
+	NewVar is Var1+Var2,
+	N1 is N - 1,
+	ifib(N1,Var2,NewVar,X).
 
