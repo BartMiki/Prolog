@@ -3,10 +3,42 @@ reverse_list([H|T],L):-
     reverse_list(T,L1),
     append(L1,[H],L).
 
-set_from_list([],[]):-!.
-set_from_list([Head|Tail],Set):-
-    member(Set,Head),
-    set_from_list(Tail,Set).
-set_from_list([Head|Tail],Set):-
-    append(SubSet,[Head],Set),
-    set_from_list(Tail,SubSet).
+negative_to_left([],[]):-!.
+negative_to_left(In,Out):-
+    negative_to_left(In,Negative,Positive),
+    append(Negative,Positive,Out).
+
+negative_to_left([],[],[]):-!.
+negative_to_left([H|T],Negative,Positive):-
+    H<0,!,
+    negative_to_left(T,NewNegative,Positive),
+    append(NewNegative,[H],Negative).
+negative_to_left([H|T],Negative,Positive):-
+    H>=0,!,
+    negative_to_left(T,Negative,NewPositive),
+    append(NewPositive,[H],Positive).
+
+neighbours([Left,X,Right|_],X,Left,Right).
+neighbours([_,Y,Z|T],X,Left,Right):-
+    Y \= X,
+    neighbours([Y,Z|T],X,Left,Right).
+
+get_pairs([A,B|_],A,B).
+get_pairs([_|T],A,B):-
+    get_pairs(T,A,B).
+
+list_middle([X],X).
+list_middle([X,Y],[X,Y]).
+list_middle([_|X],Output):-
+    append(Inner,[_],X),
+    list_middle(Inner,Output).
+
+to_set(List,Set):-
+    to_set(List,[],RevSet),
+    reverse(RevSet,Set).
+to_set([],Set,Set):-!.
+to_set([Head|Tail],Set,Acc):-
+    member(Head,Set),!,
+    to_set(Tail,Set,Acc).
+to_set([Head|Tail],Set,Acc):-!,
+    to_set(Tail,[Head|Set],Acc).
