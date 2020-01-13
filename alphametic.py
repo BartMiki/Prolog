@@ -29,9 +29,8 @@ def make_product(exp):
     if isinstance(exp, str):
         return exp
 
-    exp.reverse()
     result = []
-    for power, atom in enumerate(exp):
+    for power, atom in enumerate(reversed(exp)):
         if power == 0:
             result.append(atom)
         else:
@@ -101,7 +100,7 @@ if __name__ == "__main__":
     parser.add_argument('sentence', help='Sentence to parse as alphametic')
     args = parser.parse_args()
 
-    main(args.sentence)
+    main(args.sentence.upper())
     # main('BÓJKA * 6 = WYROK')
     # main('SEND + MORE=MONEY')
     # main('MROK ^ 2 = CIEMNOŚĆ')
