@@ -13,9 +13,8 @@ visit(sol(fs:FS, hs:HS, j:J, m:M, t:T)) :-
 
 horse(sol(pf: PF, nm: NM, wp: WP, hgl: HGL, sg: SG)) :-
     Vars = [PF, NM, WP, HGL, SG],
-    Vars ins 1..6,
+    Vars ins 1..5,
     (PF #< NM) #\/ (PF #> WP),
     (WP #= PF) #<==> (HGL #\= SG),
-    ((PF - SG) #<==> (SG - WG)) #<==> (WP > NM),
+    ((PF - SG) #= (SG - WG)) #<==> (WP #> NM),
     labeling([ff], Vars).
-
